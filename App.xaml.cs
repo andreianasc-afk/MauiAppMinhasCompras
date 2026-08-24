@@ -29,6 +29,9 @@ namespace MauiAppMinhasCompras
             InitializeComponent();
 
             MainPage = new NavigationPage(new Views.ListaProduto());
+            //return new Windou(new Listaproduto());
+            //return new Window(new NavigationPage(new ListaProduto()));
+            //deixei como comentário para o caso de não funcionar sem a alteração, neste caso eu alteraria.
         }
     }
 }
