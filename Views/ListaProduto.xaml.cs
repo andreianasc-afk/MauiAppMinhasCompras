@@ -65,6 +65,33 @@ public partial class ListaProduto : ContentPage
 
     }
 
+    private async void txt_categoria_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        try
+        {
+            string categoria = e.NewTextValue;
+
+            Lista.Clear();
+
+            if (string.IsNullOrWhiteSpace(categoria))
+            {
+                List<Produto> tmp = await App.Db.GetAll();
+
+                tmp.ForEach(i => Lista.Add(i));
+            }
+            else
+            {
+                List<Produto> tmp = await App.Db.SearchCategoria(categoria);
+
+                tmp.ForEach(i => Lista.Add(i));
+            }
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
+
     private void ToolbarItem_Clicked_1(Object sender, EventArgs e)
     {
         double soma = Lista.Sum(i => i.Total);
@@ -113,4 +140,8 @@ public partial class ListaProduto : ContentPage
             DisplayAlert("Ops", ex.Message, "OK");
         }
         }
+    private async void ToolbarItem_Relatorio(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new RelatorioCategoria());
     }
+}
